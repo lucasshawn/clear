@@ -1,0 +1,22 @@
+﻿/* Override previously set items for body content */
+.body-content {
+    max-width: 1280px;
+    padding: unset;
+    margin: unset;
+}
+.clarity-banner {
+    background-repeat: no-repeat;
+    background-image: url(/img/dt/ElderlyCouple-Dt-1280.png);
+    background-size: 1024px 834px;
+    background-position: center;
+    height: 834px;
+}
+
+.ui-dialog .ui-state-error {
+    padding: .3em;
+}
+
+.validateTips {
+    border: 1px solid transparent;
+    padding: 0.3em;
+}

@@ -3,3 +3,9 @@
 ################################################################################
 
 /.vs
+/src/.vs/ClearWeb/v15
+/src/.vs
+/src/ClearWebWs01/bin
+/src/ClearWebWs01/obj
+/src/ClearWeb/bin
+/src/ClearWeb/obj

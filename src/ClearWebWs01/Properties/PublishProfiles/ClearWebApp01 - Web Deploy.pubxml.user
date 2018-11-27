@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAEV1hH2UdEE6qbYckhxrZPQAAAAACAAAAAAAQZgAAAAEAACAAAABeRNA+HBOjxcmHoir92EDCvY5g9TlpQY+pL6DlOnU5XgAAAAAOgAAAAAIAACAAAABa6BmVQGOzhYGY8ghxGgbsfUtTOcjMx1ktU032vjCZcYAAAADGgoP+QSicgjp/3/gmVsuPWcUAdMatcFhQ1IWcOUGI/5CbCaFDmTb9ml7lC7z4M0rfuDcwMdDY2EHqt6gl6AC4Lvr1JaNBl9oBSyPdr4us2UTuYaTtDCWuE4KFpMNPxEb5r5Ol5LQpyHQhrsaLk0DsH/2kWHgVOT28wKTO63sr90AAAACCsob75ojbDGgpYbbFqxMf7sOHqs16t4BPAdaZt57Q7O9WO4ldAG0dqpzVi5hXyL4WLb9D2Sipd3TEIUeOcOG6</EncryptedPassword>
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="DefaultConnection">
+      <Value>Data Source=tcp:clearwebsql01.database.windows.net,1433%3bInitial Catalog=ClearWebSql01%3bUser Id=Admin01%40clearwebsql01%3bPassword=Cameron311!!</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+  <ItemGroup>
+    <EFMigrations Include="ClearWebWs01.Data.ApplicationDbContext">
+      <Value>Data Source=tcp:clearwebsql01.database.windows.net,1433%3bInitial Catalog=ClearWebSql01%3bUser Id=Admin01%40clearwebsql01%3bPassword=Cameron311!!</Value>
+    </EFMigrations>
+  </ItemGroup>
+</Project>
