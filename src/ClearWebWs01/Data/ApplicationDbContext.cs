@@ -19,6 +19,6 @@ namespace ClearWebWs01.Data
         public DbSet<ClearWebWs01.Models.Devices.Device> Device { get; set; }
         public DbSet<ClearWebWs01.Models.Subscriptions.Subscription> Subscription { get; set; }
         public DbSet<ClearWebWs01.Models.Notifications.Notification> Notification { get; set; }
-        
+        public DbSet<ClearWebWs01.Models.Relationships.UserToDevice> UsersToDevices { get; set; }        
     }
 }

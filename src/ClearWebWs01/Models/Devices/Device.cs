@@ -14,7 +14,7 @@ namespace ClearWebWs01.Models.Devices
         public string Guid { get; set; }
         [Display(Name = "Device Name")]
         public string Name { get; set; }
-        public string Status { get; set; }
+        public DeviceStatus Status { get; set; }
         [Display(Name="Room")]
         public string OnPremLocation { get; set; }
         [Display(Name="World Location")]
@@ -23,5 +23,23 @@ namespace ClearWebWs01.Models.Devices
         public string GroupId { get; set; }
         [Display(Name ="Activation Code")]
         public int ActivationCode { get; set; }
+    }
+
+    public enum DeviceStatus
+    {
+        [Display(Name ="Unknown State")]
+        Unknown,                            // 0
+        [Display(Name = "Pending First Use")]
+        PendingProvision,                   // 1
+        [Display(Name = "Pending User Activation")]
+        ProvisionedPendingUser,             // 2
+        [Display(Name = "Configured")]
+        UserConfiguredPendingAcknowledge,   // 3
+        [Display(Name = "Pending Subscription")]
+        ActivePendingSubscription,          // 4
+        [Display(Name = "Active")]
+        Active,                             // 5
+        [Display(Name = "Deprecated")]
+        Deprecated                          // 6
     }
 }

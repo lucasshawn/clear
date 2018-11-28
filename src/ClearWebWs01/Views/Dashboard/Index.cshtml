@@ -5,73 +5,84 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script language="jscript">
-    allFields = $([]).add("#activationCode");
-    dialogWnd = $("#dialog");
-    
-    function checkIsNumber(o, msg) {
-        regexp = /^\d{4}$/;
-        if (!regexp.test(o.val())) {
-            o.addClass("ui-state-error");
-            updateTips(msg);
-            return false;
-        }
-        alert("pass");
-        return true;
-    }
-
-    function updateTips(t) {
-        $("#validateTips")
-            .text(t)
-            .addClass("ui-state-highlight");
-        setTimeout(function () {
-            $("#validateTips").removeClass("ui-state-highlight", 1500);
-        }, 500);
-    }
-
-    function addDevice() {
-        if (!checkIsNumber($("#activationCode"), "A 4 digit code is expected.")) {
-            return false;
-        }
-        $.ajax({
-            url: '/dashboard/BindDeviceToThisUser/' + $("#activationCode").val(),
-            method: 'PUT',
-            success: function (data) {
-                if (data.success) {
-                    alert("success");
-                }
-                else {
-                    alert(data.message);
-                }
-            },
-            error: function (data) {
-                alert("failure");
-            }
-        });
-    }
-
     $(function () {
-        $("#dialog").dialog({
-            autoOpen: true,
+        tipsPrompt = "Clarity gave you a 4 digit code (press the Home button to hear it again). ";
+        allFields = $([]).add("#activationCode");
+        dlgWnd = $("#dialog");
+        tips = $("#validateTips");
+        code = $("#activationCode");
+
+        function checkIsNumber(o, msg) {
+            regexp = /^\d{4}$/;
+            if (!regexp.test(o.val())) {
+                o.addClass("ui-state-error");
+                updateTips(msg);
+                return false;
+            }
+
+            return true;
+        }
+
+        function updateTips(t) {
+            tips
+                .text(t)
+                .addClass("ui-state-highlight");
+            setTimeout(function () {
+                tips.removeClass("ui-state-highlight", 1500);
+            }, 500);
+        }
+
+        function addDevice() {
+            if (!checkIsNumber(code, "A 4 digit code is expected.")) {
+                return false;
+            }
+
+            $.ajax({
+                url: '/dashboard/BindDeviceToThisUser/' + code.val(),
+                method: 'PUT',
+                success: function (data) {
+                    if (data.success) {
+                        updateTips("Adding device " + data.device.id + " to list.");
+                    }
+                    else {
+                        updateTips(data.message);
+                    }
+                },
+                error: function (data) {
+                    alert("UNEXPECTED ERROR FROM SERVICE." + data);
+                }
+            });
+        }
+
+        dlgWnd.dialog({
+            autoOpen: false,
             resizable: false,
             height: "auto",
-            width: 400,
+            width: 500,
             modal: true,
             buttons: {
-                "Add Device": addDevice
+                "OK": function () {
+                    if (!addDevice())
+                        return;
+
+                    dlgWnd.dialog("close");
+                }
             },
             close: function () {
                 allFields.removeClass("ui-state-error");
+                tips.text(tipsPrompt);
+                code.val("");
             }
         });
-        $("#dialog").dialog("close");
+        tips.text(tipsPrompt);
     });
 </script>
 
 <h1>Dashboard</h1>
 
 <!-- Initially hidden modal dialog for collecting the Activation Code -->
-<div id="dialog" title="Add a Device">
-    <p id="validateTips">The Activation Code will be a 4 digit number.</p>
+<div id="dialog" title="Add Your New Device">
+    <p id="validateTips"/>
     <p>Enter the Activation Code:</p>
     <input id="activationCode" type="text" />
 </div>
@@ -83,9 +94,9 @@
             <h4 class="card-title">Devices You Own</h4>
         </div>
         <div class="card-body">
-            @if (Model == null || Model.DeviceList.Count() == 0)
+            @if (Model == null || Model.OwnedDevices == null || Model.OwnedDevices.Count() == 0)
             {
-                <p>There are no devices in your "Owned" list yet.</p>
+                <p>There are no devices in your list yet.</p>
                 <p>
                     Click <a href = "#" onclick = "$('#dialog').dialog('open');" >here</a> to activate a device.
                 </p>
@@ -93,38 +104,7 @@
                 else
                 {
                     <partial name="_DevicesList" model="@Model" />
-                    <table>
-                        <tbody>
-                            @foreach (var item in Model.DeviceList)
-                            {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Guid)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Name)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Status)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.OnPremLocation)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.GeoLocation)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.GroupId)
-                                    </td>
-                                    <td>
-                                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                                    </td>
-                                </tr>
-                        }
-                        </tbody>
-                    </table>
+                    
                 <p>
                     <a href="#" onclick="$('#dialog').dialog('open');">Add a Device</a>
                 </p>

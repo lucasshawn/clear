@@ -13,7 +13,7 @@ namespace ClearWebWs01.ViewModels
     /// </summary>
     public class AppDataViewModel
     {
-        public DbSet<Device> DeviceList { get; set; }
-        public DbSet<IdentityUser> Users { get; set; }
+        public IEnumerable<Device> OwnedDevices { get; set; } = new Device[] { };
+        public IEnumerable<IdentityUser> Users { get; set; } = new IdentityUser[] { };
     }
 }

@@ -19,23 +19,6 @@ namespace ClearWebWs01.Models.Devices
             _context = context;
         }
 
-        [HttpPut]
-        [Route("dashboard/binddevicetothisuser/{activationId}")]
-        public async Task<IActionResult> BindDeviceToThisUser(int? activationId)
-        {
-            // Get the current user, their ID, then find the device with activationId, then attach device to this profile
-            // TODO: there needs to be more validation on this device (is it already activated?  is it already attached to another profile?
-            //       is it deprecated?  etc...)
-            var user = HttpContext.User;
-            var result = new
-            {
-                success = false,
-                message = "This is a test"
-            };
-            return new StatusCodeResult(403);
-            
-        }
-
         // GET: Devices
         public async Task<IActionResult> Index()
         {
